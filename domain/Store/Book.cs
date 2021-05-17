@@ -9,6 +9,7 @@
         {
             Id = id;
             Title = title;
+
         }
 
     }
