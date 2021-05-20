@@ -21,6 +21,7 @@ namespace Store.Web
         {
             services.AddControllersWithViews();
             services.AddSingleton<IBookRepository, BookRepositor>();
+            services.AddSingleton<BookSevice>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
