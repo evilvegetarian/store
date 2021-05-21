@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Store
+﻿namespace Store
 {
     public class BookSevice
     {
@@ -11,7 +9,7 @@ namespace Store
             this.bookRepository = bookRepository;
         }
 
-        public Book[] GetAllbyQuery (string query)
+        public Book[] GetAllbyQuery(string query)
         {
             if (Book.IsIsbn(query))
                 return bookRepository.GetAllByIsbn(query);

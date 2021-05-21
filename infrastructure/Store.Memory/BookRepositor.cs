@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 namespace Store.Memory
 {
@@ -26,8 +27,8 @@ namespace Store.Memory
 
         public Book[] GetAllByTitleOrAuthor(string query)
         {
-            return books.Where(book => book.Title.Contains(query)
-                                    || book.Author.Contains(query))
+            return books.Where(book => book.Title.Contains(query, StringComparison.OrdinalIgnoreCase)
+                                    || book.Author.Contains(query, StringComparison.OrdinalIgnoreCase))
                         .ToArray();
         }
 
