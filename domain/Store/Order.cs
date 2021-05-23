@@ -15,15 +15,9 @@ namespace Store
             get { return items; }
         }
 
-        public int TotalCount
-        {
-            get { return items.Sum(item => item.Count); }
-        }
+        public int TotalCount => items.Sum(item => item.Count);
 
-        public decimal TotalPrice
-        {
-            get { return items.Sum(item => item.Price * item.Count); }
-        }
+        public decimal TotalPrice => items.Sum(item => item.Price * item.Count);
 
         public Order(int id, IEnumerable<OrderItem> items)
         {
@@ -34,22 +28,45 @@ namespace Store
 
             this.items = new List<OrderItem>(items);
         }
-        public void AddItem(Book book, int count)
+
+        public OrderItem GetItem(int bookId)
+        {
+            int index = items.FindIndex(item => item.BookId == bookId);
+
+            if (index == -1)
+                ThrowBookExcaption("Book not found.", bookId);
+
+            return items[index];
+        }
+
+        public void AddOrUpdateItem(Book book, int count)
         {
             if (book == null)
                 throw new ArgumentNullException(nameof(book));
 
-            var item = items.SingleOrDefault(x => x.BookId == book.Id);
-
-            if (item == null)
-            {
+            int index = items.FindIndex(item => item.BookId == book.Id);
+            if (index == -1)
                 items.Add(new OrderItem(book.Id, count, book.Price));
-            }
             else
-            {
-                items.Remove(item);
-                items.Add(new OrderItem(book.Id, item.Count + count, book.Price));
-            }
+                items[index].Count += count;
+        }
+
+        public void RemoveItem(int bookId)
+        {
+            int index = items.FindIndex(item => item.BookId == bookId);
+
+            if (index == -1)
+                ThrowBookExcaption("Order does not contain book", bookId);
+
+            items.RemoveAt(index);
+        }
+
+        private void ThrowBookExcaption(string message, int bookId)
+        {
+            var excaption = new InvalidOperationException(message);
+            excaption.Data["BookId"] = bookId;
+
+            throw excaption;
         }
     }
 }

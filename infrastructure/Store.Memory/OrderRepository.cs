@@ -10,7 +10,7 @@ namespace Store.Memory
         public Order Create()
         {
             int nextId = orders.Count + 1;
-            var order = new Order(nextId,new OrderItem[0]);
+            var order = new Order(nextId, new OrderItem[0]);
 
             orders.Add(order);
 
@@ -24,6 +24,7 @@ namespace Store.Memory
 
         public void Update(Order order)
         {
+            ;
         }
     }
 }
